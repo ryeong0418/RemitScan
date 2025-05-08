@@ -26,7 +26,7 @@ https://docs.google.com/spreadsheets/d/13i9EEOPVrwfNdQjwzAHsoBYhe_UiJ6kofGHuEqlM
 | 이름     | 역할                   | 메일 |
 |--------|----------------------|-|
 | 김서령    | 총괄 / XGboost 알고리즘 적용 | ryeong2105@gmail.com |
-| 조용성    |      | |
+| 조용성    | Random Forest 알고리즘 적용 및 모델 고도화 | j808esc@gmali.com |
 | 임은서    |                      | |
 | 김선민    |                |  |
 
