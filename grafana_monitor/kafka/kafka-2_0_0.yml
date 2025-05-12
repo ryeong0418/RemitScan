@@ -1,0 +1,11 @@
+lowercaseOutputName: true
+rules:
+  - pattern: "kafka.server<type=(.+), name=(.+)PerSec\\w*><>Count"
+    name: kafka_server_$1_$2_total
+    type: COUNTER
+  - pattern: "kafka.server<type=(.+), name=(.+)><>Value"
+    name: kafka_server_$1_$2
+    type: GAUGE
+  - pattern: "kafka.cluster<type=(.+), name=(.+)><>Value"
+    name: kafka_cluster_$1_$2
+    type: GAUGE

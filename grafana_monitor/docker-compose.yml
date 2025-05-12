@@ -1,0 +1,117 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: wurstmeister/kafka:2.13-2.8.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "7071:7071"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_OPTS: "-javaagent:/opt/kafka/jmx_prometheus_javaagent.jar=7071:/opt/kafka/kafka-2_0_0.yml"
+    volumes:
+      - ./kafka/jmx_prometheus_javaagent.jar:/opt/kafka/jmx_prometheus_javaagent.jar
+      - ./kafka/kafka-2_0_0.yml:/opt/kafka/kafka-2_0_0.yml
+    depends_on:
+      - zookeeper
+
+
+
+
+
+  spark:
+    image: bitnami/spark
+    hostname: spark
+    container_name: spark
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_OPTS=-javaagent:/opt/bitnami/spark/jmx_prometheus_javaagent.jar=8090:/opt/bitnami/spark/config.yaml
+    ports:
+      - "8080:8080"    # Spark UI
+      - "8090:8090"    # Prometheus metrics
+    volumes:
+      - ./spark/metrics.properties:/opt/bitnami/spark/conf/metrics.properties
+      - ./spark/jmx_prometheus_javaagent.jar:/opt/bitnami/spark/jmx_prometheus_javaagent.jar
+      - ./spark/config.yaml:/opt/bitnami/spark/config.yaml
+
+  prometheus:
+    image: prom/prometheus
+    
+    hostname: prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+        
+    hostname: grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+    - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+    - ./grafana/dashboards:/var/lib/grafana/dashboards
+
+  airflow-webserver:
+    hostname: airflow-webserver
+    container_name: airflow-webserver
+    volumes:
+      - ./dags:/opt/airflow/dags
+    image: apache/airflow:2.6.3
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
+    ports:
+      - "8081:8080"
+    command: webserver
+
+  airflow-scheduler:
+    hostname: airflow-scheduler
+    container_name: airflow-scheduler
+    image: apache/airflow:2.6.3
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
+    command: scheduler
+
+
+  airflow-postgres:
+    hostname: airflow-postgres
+    container_name: airflow-postgres  
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      
+  monitor:
+    hostname: monitor
+    container_name: monitor
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+      - "9101:9101"
+
+volumes:
+  postgres_data: {}

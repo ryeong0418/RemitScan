@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+# prometheus.yml 예시
+scrape_configs:
+  - job_name: "model_metrics"
+    static_configs:
+      - targets: ["monitor:8000"]
+  - job_name: "kafka_broker"
+    static_configs:
+      - targets: ["kafka:7071"] # Kafka JMX Exporter 포트
+  - job_name: "spark_master"
+    static_configs:
+      - targets: ["spark:8090"] # Spark Master metricsZ
+  - job_name: "fastapi_custom_metrics"
+    static_configs:
+      - targets: ["monitor:9101"]
