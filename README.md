@@ -34,9 +34,8 @@ https://docs.google.com/spreadsheets/d/13i9EEOPVrwfNdQjwzAHsoBYhe_UiJ6kofGHuEqlM
 | 김선민    | API 개발 및 디바이스 연동       | seonmin8284@gmail.com |
 
 ## 🔗 Project Planning (WBS)
+![wbs](/assets/fds_modeling_wbs.png)
 
-[!wbs](/assets/fds_modeling_wbs.png)
 
-## 🔗 🚀 Progress Tracker 
+## 🚀 Progress Tracker 
 https://gratis-catmint-235.notion.site/RemitScan-1dd38a80454880178f56c04edd60683d?pvs=4
-qw
