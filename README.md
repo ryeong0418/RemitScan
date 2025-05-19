@@ -30,7 +30,7 @@ https://docs.google.com/spreadsheets/d/13i9EEOPVrwfNdQjwzAHsoBYhe_UiJ6kofGHuEqlM
 |--------|----------------------|-|
 | 김서령    | 총괄 / XGboost 알고리즘 적용 | ryeong2105@gmail.com |
 | 조용성    | End-to-End 프로세스 구현 | j808esc@gmail.com |
-| 임은서    |                      | |
+| 임은서    | LightGBM 알고리즘 적용 | cmdysp@naver.com|
 | 김선민    | API 개발 및 디바이스 연동       | seonmin8284@gmail.com |
 
 ## 🔗 Project Planning (WBS)
