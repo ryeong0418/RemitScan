@@ -1,1 +1,13 @@
-.venv
+# Python virtual environments
+.venv/
+
+# Bytecode
+__pycache__/
+*.pyc
+
+# 대형 파일 무시
+*.csv
+*.xlsx
+*.h5
+*.pkl
+*.pt
