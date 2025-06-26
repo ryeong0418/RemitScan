@@ -2,7 +2,6 @@ import os
 import joblib
 import pandas as pd
 import streamlit as st
-from dashboard.modules.ensemble import load_data, predict
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from dashboard.modules.eda import FraudDataEDA
@@ -12,7 +11,7 @@ import numpy as np
 import os
 import joblib
 import streamlit as st
-from dashboard.modules.ensemble import load_data, predict
+from dashboard.modules.ensemble import FraudEnsemble
 
 # Streamlit 설정
 st.set_page_config(page_title="📊 이상 거래 탐지", layout="wide")
@@ -27,8 +26,9 @@ importances = joblib.load("dashboard/models/feature_importance.pkl")
 
 
 # ✅ 데이터 로딩 및 예측
-df_raw, X = load_data(unsupervised_csv_path)
-df_pred = predict(df_raw, X, threshold)
+ensemble = FraudEnsemble()
+df_raw, X = ensemble.load_data(unsupervised_csv_path)
+df_pred = ensemble.predict(df_raw, X, threshold)
 
 # ✅ 주요 메트릭 요약
 total = len(df_pred)
