@@ -33,8 +33,3 @@ class FraudEnsemble:
 
         return df
 
-# if __name__ == "__main__":
-#     filename = 'unsupervised_pdf'
-#     csv_path = os.path.join(project_root, 'dashboard/data', f'{filename}.csv')
-#     df, X = load_data(csv_path)
-#     print(predict(df, X, threshold))

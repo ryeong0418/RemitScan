@@ -119,18 +119,26 @@ with col1:
 
     st.markdown(
         """
-            ### 📌 Rule 기반 이상 거래 탐지 조건
-            - **Rule 1**: 거래 금액 ≥ 700,000원  
-            - **Rule 2**: 계좌 평균 대비 2배 이상 거래  
-            - **Rule 3**: VPN 사용, 신규 기기, 루팅 중 하나라도 포함
-        """
-        )
+        <div style="border: 2px solid #FF6B6B; border-radius: 10px; padding: 15px; background-color: #FFF0F0;">
+            <h4>📌 Rule 기반 이상 거래 탐지 조건</h4>
+            <ul>
+                <li><b>Rule 1</b>: 거래 금액 ≥ 700,000원</li>
+                <li><b>Rule 2</b>: 계좌 평균 대비 2배 이상 거래</li>
+                <li><b>Rule 3</b>: VPN 사용, 신규 기기, 루팅 중 하나라도 포함</li>
+            </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 with col2:
     # Pie Chart: Rule 충족 여부
     rule_hit = fds_df[["is_high_amt", "is_high_ratio", "has_risk_factor"]].all(axis=1)
     hit = rule_hit.sum()
     print(hit)
     miss = len(rule_hit) - hit
+
+
 
     fig, ax = plt.subplots()
     ax.pie(
